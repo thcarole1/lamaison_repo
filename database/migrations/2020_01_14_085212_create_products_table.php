@@ -24,6 +24,11 @@ class CreateProductsTable extends Migration
             $table->enum('Code',['solde', 'new'])->nullable();;
             $table->string('Reference',100)->nullable();
             $table->dateTime('published_at')->nullable(); // DATETIME nullable non obligatoire
+            $table->bigInteger('category_id')->unsigned();
+            $table->foreign('category_id')
+            ->references('id')
+            ->on('categories')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

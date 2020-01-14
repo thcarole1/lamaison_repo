@@ -21,6 +21,7 @@ $factory->define(Product::class, function (Faker $faker)
             'Status'=> $statusArrayValues[rand(0,1)],
             'Code'=> $codeArrayValues[rand(0,1)],
             'Reference'=> $faker->text($maxNbChars = 10),
-            'published_at'=>now()
+            'published_at'=>now(),
+            'category_id'=>rand(1,2)
         ];
 });
