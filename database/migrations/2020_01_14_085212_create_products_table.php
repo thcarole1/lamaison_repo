@@ -17,11 +17,11 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('Title',100)->nullable();
             $table->text('Description',100)->nullable();
-            $table->decimal('Price',5,2)->nullable();;
-            $table->enum('Size',['46','48','50','52'])->nullable();;
-            $table->string('url_image',100)->nullable();;
-            $table->enum('Status',['publié','brouillon'])->nullable();;
-            $table->enum('Code',['solde', 'new'])->nullable();;
+            $table->decimal('Price',5,2)->nullable();
+            $table->enum('Size',['46','48','50','52'])->nullable();
+            $table->string('url_image',100)->nullable();
+            $table->enum('Status',['publié','brouillon'])->nullable();
+            $table->enum('Code',['solde', 'new'])->nullable();
             $table->string('Reference',100)->nullable();
             $table->dateTime('published_at')->nullable(); // DATETIME nullable non obligatoire
             $table->bigInteger('category_id')->unsigned();

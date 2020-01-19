@@ -14,3 +14,17 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/blade', function(){
+    return view('conteneur');
+});
+
+Route::get('accueil', 'ProductController@show_all')->name('accueil');
+Route::get('produit/{id}', 'ProductController@show_product')->name('produit');
+Route::get('soldes', 'ProductController@show_soldes')->name('soldes');
+Route::get('hommes', 'ProductController@show_hommes')->name('hommes');
+Route::get('femmes', 'ProductController@show_femmes')->name('femmes');
+
+
+
+
