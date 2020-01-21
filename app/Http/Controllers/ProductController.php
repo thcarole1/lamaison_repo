@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Product;
-
+use App\Category;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -24,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('back.add_product');
     }
 
     /**
@@ -33,10 +34,54 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id=-1)
     {
-        //
+        // valider les données
+        $data=$this->validate($request,[
+            'Title' => 'required',
+            'Description' => 'required',
+            'Price' => 'required',
+            'Code'=> 'required',
+            'Reference' => 'required',
+            'Publication' => 'required',
+            'Taille' => 'required',
+            'Categorie' => 'required',
+            // 'url' => 'image'
+        ]);  
+
+        if($id>0) //Cas d'une mise à jour d'un produit
+        {
+            // enregistrer en base de données si les données sont valides
+            $product=Product::find($id);
+        }
+        else 
+        {
+            //Création d'un nouveau produit ($id<=0)
+            $product= new Product;
+        }
+            $product->Title=$data['Title'];
+            $product->Description=$data['Description'];
+            $product->Price=$data['Price'];
+            $product->Code=$data['Code'];
+            $product->Status=$data['Publication'];
+            $product->Reference=$data['Reference'];
+            $product->Size=$data['Taille'];
+            //  $product->url_image=$data['url'];
+            $product->category_id=$data['Categorie'];
+            $product->save();
+
+            if($id>0) //Cas d'une mise à jour d'un produit
+            {
+                // rediriger vers une page, avec un message de succès (Mise à jour d'un produit)
+                return redirect('admin/dashboard')-> with(['message' => 'Votre produit a bien été mis à jour']);
+            }
+            else
+            {
+                // rediriger vers une page, avec un message de succès (création d'un nouveau produit)
+                return redirect('admin/dashboard')-> with(['message' => 'Votre produit a bien été créé']);
+            }      
     }
+
 
     /**
      * Display the specified resource.
@@ -72,21 +117,38 @@ class ProductController extends Controller
         return view('front.accueil_boutique',['total'=>$products->total()]) -> with('products',$products);
     }
 
+    public function show_all_dashboard() // Cette fonction récupère tous les produits présents dans la base de données products et les renvoie vers la vue "accueil_boutique" pour affichage
+    {        
+        $products=Product::where('products.id','<>','null')
+                            ->join('categories','products.category_id','=','categories.id')
+                            ->select('products.*', 'categories.Title AS category_Title') 
+                            ->orderBy('id', 'desc')                        
+                            ->paginate(10);
+
+        return view('back.dashboard',['total'=>$products->total()]) -> with('products',$products);
+    }
+
    public function show_soldes()
     {        
-        $products=Product::where('Code','solde')->paginate(6);   
+        $products=Product::where('Code','solde')
+                            ->orderBy('id', 'desc')
+                            ->paginate(6);   
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   
     }
 
     public function show_hommes()
     {        
-        $products=Product::where('category_id',1)->paginate(6);     
+        $products=Product::where('category_id',1)
+                            ->orderBy('id', 'desc')
+                            ->paginate(6);     
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   
     }
 
     public function show_femmes()
     {        
-        $products=Product::where('category_id',2)->paginate(6);       
+        $products=Product::where('category_id',2)
+                            ->orderBy('id', 'desc')
+                            ->paginate(6);       
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   
     }
 
@@ -98,7 +160,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $products=Product::find($id);
+        return view('back.update') -> with('products',$products);  
     }
 
     /**
@@ -109,8 +172,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {//
     }
 
     /**
@@ -121,6 +183,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::destroy($id);
+        return redirect('admin/dashboard')-> with(['message_supp' => 'Votre produit a bien été supprimé']);
     }
 }

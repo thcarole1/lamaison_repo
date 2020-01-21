@@ -23,6 +23,6 @@ class ProductSeeder extends Seeder
             'Description' => 'Produits destinés aux femmes',
         ]);
         
-        factory(App\Product::class, 22)->create();
+        factory(App\Product::class, 100)->create();
     }
 }

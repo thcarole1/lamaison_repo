@@ -26,9 +26,9 @@ class CreateProductsTable extends Migration
             $table->dateTime('published_at')->nullable(); // DATETIME nullable non obligatoire
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')
-            ->references('id')
-            ->on('categories')
-            ->onDelete('cascade');
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
