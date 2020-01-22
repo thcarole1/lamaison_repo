@@ -7,7 +7,7 @@
 <div class='row'>   {{-- Début deuxième ligne --}} 
     <div class='row top'>
        {{ $products->links() }}
-        <span> Catégorie : {{$total}}</span>
+        <span> Nombre de produits : {{$total}}</span>
     </div>            
 
     <div class='row display'>{{-- Affichage de tous les produits de la base de données --}}

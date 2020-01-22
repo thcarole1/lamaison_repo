@@ -11,7 +11,6 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-
         //Création de 2 enregistrements (homme et femme) dans la table 'categories'
         App\Category::create([
             'Title' => 'homme',

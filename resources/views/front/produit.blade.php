@@ -12,16 +12,15 @@
 
                     <div class="photos conteneur">
                             <span>EMPTY FOR THE TIME BEING</span>
-                            <div class="photo_vignette conteneur">Vignette 1</div>
-                            <div class="photo_vignette conteneur">Vignette 2</div>
-                            <div class="photo_vignette conteneur">Vignette 3</div>
+                            <div class="photo_vignette conteneur">Image 1</div>
+                            <div class="photo_vignette conteneur">Image 2</div>
+                            <div class="photo_vignette conteneur">Image 3</div>
                     </div>
 
                     <div class="picture conteneur">
                         <div class='row display'>
                                 <img src={{$table['url_image']}}  class="card-img-top" alt="...">
-                                <div class="card-body">
-                                </div>
+                                <div class="card-body"></div>
 
                         </div>
                     </div>

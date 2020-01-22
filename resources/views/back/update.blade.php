@@ -82,7 +82,7 @@
             <br/><br/>
 
             <span>Image</span>
-            <input type="file" name="Photo">
+            <input type="file" name="Photo" value={{$products->url_image}}>
             {{$products->url_image}}
          
             <br><br>

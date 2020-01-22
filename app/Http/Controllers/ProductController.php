@@ -168,13 +168,22 @@ class ProductController extends Controller
             'Publication' => 'required',
             'Taille' => 'required',
             'Categorie' => 'required',
-            'Photo' => 'required |image'
+            'Photo' => 'image'
         ]);  
- 
-        //Traitement photo
-        $file=$request->file('Photo');
-        $extension=$file->extension();
-        $path=$file->storeAs('Photos',$_FILES['Photo']['name']);
+
+        if($_FILES['Photo']['name'] <> "") //En cas de mise à jour de l'image du produit
+        {
+            //Traitement photo
+            $file=$request->file('Photo');
+            $extension=$file->extension();        
+            $path_cleaned=str_replace(" ", "_",$_FILES['Photo']['name']);
+            $path=$file->storeAs('Photos',$path_cleaned);
+
+            // echo '<pre>';
+            // dump(url($path));
+            // dd($path);
+            // echo '</pre>';
+        }
 
         // enregistrer en base de données si les données sont valides
         $product=Product::find($id);
@@ -186,7 +195,10 @@ class ProductController extends Controller
         $product->Reference=$data['Reference'];
         $product->Size=$data['Taille'];            
         $product->category_id=$data['Categorie'];
-        $product->url_image=$path;
+        if($_FILES['Photo']['name'] <> "")
+        {
+            $product->url_image=url("upload/".$path);
+        }        
         $product->save();
 
         // rediriger vers une page, avec un message de succès (Mise à jour d'un produit)
