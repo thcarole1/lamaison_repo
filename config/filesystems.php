@@ -46,7 +46,7 @@ return [
         'local' => [
             'driver' => 'local',
             // 'root' => storage_path('app'),
-            'root' => public_path('img'), //Enregistrements des images dans le dossier Images
+            'root' => public_path('upload'), //Enregistrements des images dans le dossier Images
 
         ],
 

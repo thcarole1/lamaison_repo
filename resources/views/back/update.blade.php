@@ -16,7 +16,7 @@
     </div>
 @endif
 
-<form action={{route('update_post',$products->id)}} method="post">
+<form action={{route('update_post',$products->id)}} method="post" enctype="multipart/form-data">
 
 {{ csrf_field() }}
 
@@ -81,13 +81,10 @@
             </select>
             <br/><br/>
 
-            <form action={{route('update_post',$products->id)}} method="post" enctype="multipart/form-data">
-                Image
-                {{ csrf_field() }}
-                <input type="file" name="url">
-                {{$products->url_image}}
-            </form>
-
+            <span>Image</span>
+            <input type="file" name="Photo">
+            {{$products->url_image}}
+         
             <br><br>
             <input type="submit" value="Mettre à jour">
         </div>
@@ -129,4 +126,5 @@
 
     </div> {{-- Fin div prinicpale --}}
 </form>
+
 @endsection

@@ -16,7 +16,7 @@
     </div>
 @endif
 
-<form action={{route('ajout_produit_post')}} method="post">
+<form action={{route('ajout_produit_post')}} method="post" enctype="multipart/form-data">
 
 {{ csrf_field() }}
 
@@ -49,19 +49,46 @@
 
             <span>Taille</span>
             <select name='Taille'>
+                @if(old('Taille')==46)
+                    <option value="" placeholder='Entrer taille'></option>
+                    <option value="46" selected>46</option>
+                    <option value="48">48</option>
+                    <option value="50">50</option>
+                    <option value="52">52</option>
+
+                @elseif(old('Taille')==48)     
+                    <option value="" placeholder='Entrer taille'></option>     
+                    <option value="46">46</option>
+                    <option value="48" selected>48</option>
+                    <option value="50">50</option>
+                    <option value="52">52</option>
+
+                @elseif(old('Taille')==50)  
+                    <option value="" placeholder='Entrer taille'></option>
+                    <option value="46">46</option>
+                    <option value="48">48</option>
+                    <option value="50" selected>50</option>
+                    <option value="52">52</option>
+
+                @elseif(old('Taille')==52)  
+                    <option value="" placeholder='Entrer taille'></option>
+                    <option value="46">46</option>
+                    <option value="48">48</option>
+                    <option value="50">50</option>
+                    <option value="52" selected>52</option>
+
+                @else
                     <option value="" placeholder='Entrer taille' selected ></option>
                     <option value="46">46</option>
                     <option value="48">48</option>
                     <option value="50">50</option>
-                    <option value="52">52</option>
+                    <option value="52">52</option>                   
+                @endif
             </select>
             <br/><br/>
 
-            <form action={{route('ajout_produit_post')}} method="post" enctype="multipart/form-data">
-                Image
-                {{ csrf_field() }}
-                <input type="file" name="url">
-            </form>
+            <span>Image</span>
+            <input type="file" name="Photo">
 
             <br><br>
             <input type="submit" value="Ajouter">

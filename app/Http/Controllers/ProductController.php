@@ -15,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products=Product::where('id','<>','null')->paginate(6);
+        return view('front.accueil_boutique',['total'=>$products->total()]) -> with('products',$products);
     }
 
     /**
@@ -34,10 +35,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id=-1)
+    public function store(Request $request)
     {
-        // valider les données
-        $data=$this->validate($request,[
+         // valider les données
+         $data=$this->validate($request,[
             'Title' => 'required',
             'Description' => 'required',
             'Price' => 'required',
@@ -46,42 +47,32 @@ class ProductController extends Controller
             'Publication' => 'required',
             'Taille' => 'required',
             'Categorie' => 'required',
-            // 'url' => 'image'
-        ]);  
+            'Photo' => 'required |image'
+        ]); 
 
-        if($id>0) //Cas d'une mise à jour d'un produit
-        {
-            // enregistrer en base de données si les données sont valides
-            $product=Product::find($id);
-        }
-        else 
-        {
-            //Création d'un nouveau produit ($id<=0)
+            //Traitement photo
+            $file=$request->file('Photo');
+            $extension=$file->extension();
+            $path=$file->storeAs('Photos',$_FILES['Photo']['name']);
+
+           //Création d'un nouveau produit
             $product= new Product;
-        }
+
+            // enregistrer en base de données si les données sont valides
             $product->Title=$data['Title'];
             $product->Description=$data['Description'];
             $product->Price=$data['Price'];
             $product->Code=$data['Code'];
             $product->Status=$data['Publication'];
             $product->Reference=$data['Reference'];
-            $product->Size=$data['Taille'];
-            //  $product->url_image=$data['url'];
+            $product->Size=$data['Taille'];            
             $product->category_id=$data['Categorie'];
+            $product->url_image=$path;
             $product->save();
 
-            if($id>0) //Cas d'une mise à jour d'un produit
-            {
-                // rediriger vers une page, avec un message de succès (Mise à jour d'un produit)
-                return redirect('admin/dashboard')-> with(['message' => 'Votre produit a bien été mis à jour']);
-            }
-            else
-            {
-                // rediriger vers une page, avec un message de succès (création d'un nouveau produit)
-                return redirect('admin/dashboard')-> with(['message' => 'Votre produit a bien été créé']);
-            }      
+            // rediriger vers une page, avec un message de succès (création d'un nouveau produit)
+            return redirect('admin/dashboard')-> with(['message' => 'Votre produit a bien été créé']);
     }
-
 
     /**
      * Display the specified resource.
@@ -109,12 +100,6 @@ class ProductController extends Controller
             'Size' => $product->Size
         ];
         return view('front.produit') -> with('table',$table);
-    }
-
-    public function show_all() // Cette fonction récupère tous les produits présents dans la base de données products et les renvoie vers la vue "accueil_boutique" pour affichage
-    {        
-        $products=Product::where('id','<>','null')->paginate(6);
-        return view('front.accueil_boutique',['total'=>$products->total()]) -> with('products',$products);
     }
 
     public function show_all_dashboard() // Cette fonction récupère tous les produits présents dans la base de données products et les renvoie vers la vue "accueil_boutique" pour affichage
@@ -172,7 +157,40 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {//
+    {
+         // valider les données
+         $data=$this->validate($request,[
+            'Title' => 'required',
+            'Description' => 'required',
+            'Price' => 'required',
+            'Code'=> 'required',
+            'Reference' => 'required',
+            'Publication' => 'required',
+            'Taille' => 'required',
+            'Categorie' => 'required',
+            'Photo' => 'required |image'
+        ]);  
+ 
+        //Traitement photo
+        $file=$request->file('Photo');
+        $extension=$file->extension();
+        $path=$file->storeAs('Photos',$_FILES['Photo']['name']);
+
+        // enregistrer en base de données si les données sont valides
+        $product=Product::find($id);
+        $product->Title=$data['Title'];
+        $product->Description=$data['Description'];
+        $product->Price=$data['Price'];
+        $product->Code=$data['Code'];
+        $product->Status=$data['Publication'];
+        $product->Reference=$data['Reference'];
+        $product->Size=$data['Taille'];            
+        $product->category_id=$data['Categorie'];
+        $product->url_image=$path;
+        $product->save();
+
+        // rediriger vers une page, avec un message de succès (Mise à jour d'un produit)
+        return redirect('admin/dashboard')-> with(['message' => 'Votre produit a bien été mis à jour']);
     }
 
     /**

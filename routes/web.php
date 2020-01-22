@@ -10,18 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/admin_test', function(){
     return view('back.add_product');
 });
 
-
 //**********   Routes publiques ************************
 //Route présentant tous les produits disponibles
-Route::get('accueil', 'ProductController@show_all')->name('accueil');
+Route::get('/', 'ProductController@index')->name('accueil');
 
 //Route présentant 1 produit sélectionné
 Route::get('produit/{id}', 'ProductController@show_product')->name('produit');
@@ -42,7 +41,7 @@ Route::get('admin/dashboard/{message?}','ProductController@show_all_dashboard')-
 
 //Routes permettant de mettre à jour 1 produit
 Route::get('admin/update/{id}', 'ProductController@edit')->name('update_get');
-Route::post('admin/update/{id}','ProductController@store')->name('update_post');
+Route::post('admin/update/{id}','ProductController@update')->name('update_post');
 
 //Route permettant de supprimer 1 produit
 Route::get('admin/delete/{id}','ProductController@destroy')->name('delete');
