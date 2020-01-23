@@ -15,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::where('id','<>','null')->paginate(6);
+        // $products=Product::where('id','<>','null')->paginate(6);
+        $products=Product::where('Status','=','publié')->paginate(6);
         return view('front.accueil_boutique',['total'=>$products->total()]) -> with('products',$products);
     }
 
@@ -116,6 +117,7 @@ class ProductController extends Controller
    public function show_soldes()
     {        
         $products=Product::where('Code','solde')
+                            ->where('Status','publié')
                             ->orderBy('id', 'desc')
                             ->paginate(6);   
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   
@@ -124,6 +126,7 @@ class ProductController extends Controller
     public function show_hommes()
     {        
         $products=Product::where('category_id',1)
+                            ->where('Status','publié')
                             ->orderBy('id', 'desc')
                             ->paginate(6);     
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   
@@ -132,6 +135,7 @@ class ProductController extends Controller
     public function show_femmes()
     {        
         $products=Product::where('category_id',2)
+                            ->where('Status','publié')
                             ->orderBy('id', 'desc')
                             ->paginate(6);       
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   

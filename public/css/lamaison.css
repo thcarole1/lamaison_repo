@@ -56,3 +56,8 @@
 .update {
     display: flex;
 }
+
+.navigation{
+    display:flex;
+    justify-content: space-between;
+}

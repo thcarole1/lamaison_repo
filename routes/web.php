@@ -51,7 +51,6 @@ Route::get('admin/ajout_produit', 'ProductController@create')->name('ajout_produ
 Route::post('admin/ajout_produit/{id?}', 'ProductController@store')->name('ajout_produit_post');
 // Route::get('/admin', 'ProductController@show_all')->name('admin');
 
-
-
-
-
+//********************** Gestion de l'authentification *********
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');

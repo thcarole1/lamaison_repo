@@ -2,22 +2,21 @@
 @extends('layouts.default')
 
 @section('display_product')
-            <div class='row conteneur'>   {{-- Début deuxième ligne --}} 
+            <div class='row'>   {{-- Début deuxième ligne --}} 
 
-                <div class='path conteneur'>
+                <div class='path'>
                     <span>boutique > soldes > homme</span>
                 </div>
 
-                <div class='conteneur product'>
+                <div class='product'>
 
-                    <div class="photos conteneur">
-                            <span>EMPTY FOR THE TIME BEING</span>
+                    <div class="photos"><br><br><br><br><br>
                             <div class="photo_vignette conteneur">Image 1</div>
                             <div class="photo_vignette conteneur">Image 2</div>
                             <div class="photo_vignette conteneur">Image 3</div>
                     </div>
 
-                    <div class="picture conteneur">
+                    <div class="picture">
                         <div class='row display'>
                                 <img src={{$table['url_image']}}  class="card-img-top" alt="...">
                                 <div class="card-body"></div>
@@ -25,10 +24,10 @@
                         </div>
                     </div>
 
-                    <div class='reference size price title conteneur'>
-                            <span>{{$table['Title']}}</span> <br>
-                            <span>ref : {{$table['Reference']}}</span> <br>
-                            <span>{{$table['Price']}} euros</span><br>
+                    <div class='reference size price title'>
+                            <span>{{$table['Title']}}</span> <br><br>
+                            <span><strong>Ref : </strong>{{$table['Reference']}}</span> <br><br>
+                            <span><strong>Prix : </strong>{{$table['Price']}} euros</span><br><br>
 
                             <select class="mdb-select md-form">
                                 <option value="" disabled selected>Taille</option>
@@ -40,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class='conteneur'>
+                <div>
                     <p><strong>Description : <br></strong>{{$table['Description']}}</p>
                 </div>
             </div>  {{-- Fin deuxième ligne --}}
