@@ -1,7 +1,14 @@
 @extends('layouts.default_admin')
 
+<!-- Section définissant le titre de la page de mise à jour du produit sélectionné par l'admin -->
+@section('title')
+    <title>Boutique La Maison - Mise à jour de {{$products->Title}}</title>
+@endsection
+
+<!-- Section définissant la page de mise à jour produit-->
 @section('update_data')
 
+<!-- Gestion des messages d'erreur lors de la mise à jour produit -->
 @if ($errors->any())
     <div class="alert alert-danger">
         <strong>
@@ -82,9 +89,10 @@
             <br/><br/>
 
             <span>Image</span>
-            <input type="file" name="Photo" value={{$products->url_image}}>
-            {{$products->url_image}}
-         
+       
+            <input type="file" name="Photo" value={{$products->url_image}}> <br><br>
+            <img src={{$products->url_image}}  alt="Image of {{$products->Title}}">
+                  
             <br><br>
             <input type="submit" value="Mettre à jour">
         </div>
@@ -123,8 +131,7 @@
             <input type="text"  name='Reference' value={{$products->Reference}}>
 
         </div>  
-
-    </div> {{-- Fin div prinicpale --}}
+    </div> <!-- Fin div prinicpale -->
 </form>
 
 @endsection

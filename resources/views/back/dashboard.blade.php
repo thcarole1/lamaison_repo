@@ -1,8 +1,16 @@
 @extends('layouts.default_admin')
 
+<!-- Section définissant la page dédiée aux adminstrateurs du site La Boutique -->
+@section('title')
+    <title>Boutique La Maison - Dashboard</title>
+@endsection
+
+<!-- Section affichant la liste de tous les produits de la base de données su site La Boutique-->
 @section('display_products_list')
 
-{{ $products->links() }}
+  <div class="pagination">
+    {{ $products->links() }}
+  </div>
 
 <span>{{$total}} produits</span>
 
@@ -43,11 +51,10 @@
             <td>{{$item['category_Title']}}</td>
             <td>{{$item['Price']}}</td>
             <td>{{$item['Status']}}</td>
-            <td><button><a href={{route('update_get',$item['id'])}}>Màj</a></button></td>
-            <td><button><a href={{route('delete',$item['id'])}}>Supp</a></button></td>
+            <td><a class='btn btn-warning' href={{route('update_get',$item['id'])}} title="Modify product"><i class="fas fa-pencil-alt "></i></a></td>
+            <td><a class='btn btn-danger' href={{route('delete',$item['id'])}} title="Delete product"><i class="fas fa-trash-alt"></i></a></td>
         </tr>   
     @endforeach
   </tbody>
 </table>
-
 @endsection

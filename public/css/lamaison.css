@@ -59,5 +59,21 @@
 
 .navigation{
     display:flex;
+    margin-left: 0;
     justify-content: space-between;
+    flex-direction: row;
+}
+
+.nav-li{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.pagination{
+    justify-content: center;
+    padding-top:1em;
+}
+
+.btn-i{
+    justify-content: center;
 }

@@ -13,9 +13,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     // la fonction index() renvoie tous les produits 'publiés' de la bdd à la vue front.accueil_boutique
     public function index()
     {
-        // $products=Product::where('id','<>','null')->paginate(6);
         $products=Product::where('Status','=','publié')->paginate(6);
         return view('front.accueil_boutique',['total'=>$products->total()]) -> with('products',$products);
     }
@@ -38,7 +39,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-         // valider les données
+         // validation des données
          $data=$this->validate($request,[
             'Title' => 'required',
             'Description' => 'required',
@@ -87,6 +88,7 @@ class ProductController extends Controller
         return view('layouts.default');
     }
 
+    // la fonction show_product($id) renvoie les informations d'un produit d'identifiant $id à la vue front.produit
     public function show_product($id)
     {        
         $product = Product::findOrFail($id);
@@ -98,12 +100,15 @@ class ProductController extends Controller
             'Price' => $product->Price,
             'Title' => $product->Title,
             'Reference' => $product->Reference,
-            'Size' => $product->Size
+            'Size' => $product->Size,
+            'Code' => $product->Code,
+            'Gender' => $product ->category_id
         ];
         return view('front.produit') -> with('table',$table);
     }
 
-    public function show_all_dashboard() // Cette fonction récupère tous les produits présents dans la base de données products et les renvoie vers la vue "accueil_boutique" pour affichage
+    // Cette fonction récupère tous les produits présents dans la base de données products et les renvoie vers la vue "accueil_boutique" pour affichage
+    public function show_all_dashboard() 
     {        
         $products=Product::where('products.id','<>','null')
                             ->join('categories','products.category_id','=','categories.id')
@@ -114,6 +119,8 @@ class ProductController extends Controller
         return view('back.dashboard',['total'=>$products->total()]) -> with('products',$products);
     }
 
+
+    // La fonction show_soldes() renvoie les produits 'publiés' ET 'soldés' à la vue front.accueil_boutique
    public function show_soldes()
     {        
         $products=Product::where('Code','solde')
@@ -123,6 +130,7 @@ class ProductController extends Controller
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   
     }
 
+    // La fonction show_soldes() renvoie les produits 'publiés' ET  destinés aux hommes (i.e category_id == 1) à la vue front.accueil_boutique
     public function show_hommes()
     {        
         $products=Product::where('category_id',1)
@@ -132,6 +140,7 @@ class ProductController extends Controller
         return view('front.accueil_boutique',['total'=> $products->total()]) -> with('products',$products);   
     }
 
+        // La fonction show_soldes() renvoie les produits 'publiés' ET  destinés aux femmes (i.e category_id == 2) à la vue front.accueil_boutique
     public function show_femmes()
     {        
         $products=Product::where('category_id',2)
@@ -147,6 +156,8 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    // La fonction edit($id) renvoie les infos du produit d'identifiant $id à la vue back.update
     public function edit($id)
     {
         $products=Product::find($id);
@@ -160,6 +171,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     // La fonction update(Request $request, $id) vérifie la validité de la requête de mise à jour, 
+     //met à jour la bdd si les données sont valides et renvoie un message de type OK vers la route "admin/dashboard" 
     public function update(Request $request, $id)
     {
          // valider les données
@@ -182,11 +196,6 @@ class ProductController extends Controller
             $extension=$file->extension();        
             $path_cleaned=str_replace(" ", "_",$_FILES['Photo']['name']);
             $path=$file->storeAs('Photos',$path_cleaned);
-
-            // echo '<pre>';
-            // dump(url($path));
-            // dd($path);
-            // echo '</pre>';
         }
 
         // enregistrer en base de données si les données sont valides
@@ -215,6 +224,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    // La fonction destroy($id) supprime le produit d'identifiant $id de la base de données
+    // et renvoie un message à l'utilisateur
     public function destroy($id)
     {
         Product::destroy($id);

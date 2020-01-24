@@ -26,7 +26,7 @@ $factory->define(Product::class, function (Faker $faker)
             'Description'=> $faker->text($maxNbChars = 100),
             'Price'=> $faker->randomNumber(2),
             'Size'=> $sizeArrayValues[rand(0,3)],
-            'url_image'=> url("https://picsum.photos/id/".rand(1,100)."/200/200.jpg"),
+            'url_image'=> url("https://picsum.photos/id/".rand(1,100)."/600/600.jpg"),
             'Status'=> $statusArrayValues[rand(0,1)],
             'Code'=> $codeArrayValues[rand(0,1)],
             'Reference'=> $faker->text($maxNbChars = 10),

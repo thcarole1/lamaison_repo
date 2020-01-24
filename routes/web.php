@@ -10,13 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/admin_test', function(){
-    return view('back.add_product');
-});
 
 //**********   Routes publiques ************************
 //Route présentant tous les produits disponibles
@@ -35,7 +28,11 @@ Route::get('hommes', 'ProductController@show_hommes')->name('hommes');
 Route::get('femmes', 'ProductController@show_femmes')->name('femmes');
 
 
-//**********  Routes ADMIN  *********************************
+//********************** Gestion de l'authentification *********
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+//**********  Routes ADMIN  *************************************
 //Route admin présentant le dashboard administrateur
 Route::get('admin/dashboard/{message?}','ProductController@show_all_dashboard')->name('dashboard');
 
@@ -51,6 +48,3 @@ Route::get('admin/ajout_produit', 'ProductController@create')->name('ajout_produ
 Route::post('admin/ajout_produit/{id?}', 'ProductController@store')->name('ajout_produit_post');
 // Route::get('/admin', 'ProductController@show_all')->name('admin');
 
-//********************** Gestion de l'authentification *********
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');

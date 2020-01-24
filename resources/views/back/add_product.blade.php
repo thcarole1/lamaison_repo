@@ -1,7 +1,13 @@
 @extends('layouts.default_admin')
+<!-- Section définissant la page dédiée à l'ajout d'un nouveau produit à la base de données du site La Boutique -->
+@section('title')
+    <title>Boutique La Maison - Ajouter un nouveau produit </title>
+@endsection
 
-@section('update_data')
+<!-- Section définissant la page de création produit-->
+@section('create_data')
 
+<!-- Gestion des messages d'erreur lors de la création d'un produit -->
 @if ($errors->any())
     <div class="alert alert-danger">
         <strong>
@@ -124,7 +130,6 @@
             <input type="text"  name='Reference' placeholder='Entrer référence' value={{old('Reference')}}>
 
         </div>  
-
-    </div> {{-- Fin div prinicpale --}}
+    </div> <!-- Fin div prinicpale -->
 </form>
 @endsection
